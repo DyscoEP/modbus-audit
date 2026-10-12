@@ -1,0 +1,16 @@
+# Este repositorio solo contiene documentación y soporte.
+*.exe
+*.dll
+*.msi
+*.zip
+*.7z
+*.py
+*.pyc
+*.spec
+__pycache__/
+build/
+dist/
+.env
+.env.*
+*.pem
+*.key
