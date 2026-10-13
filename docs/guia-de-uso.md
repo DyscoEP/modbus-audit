@@ -1,10 +1,10 @@
 # Guía de uso
 
-Esta guía describe la versión de desarrollo 3.8. La descarga pública todavía está pendiente.
+Esta guía describe Modbus Audit V1.0.7, compilación 3.16. Consulta también el [LEEME incluido en el paquete](../LEEME.txt).
 
 ## Inicio y proyectos
 
-Cuando el paquete esté disponible, extrae todo el ZIP a una carpeta y ejecuta `Modbus-Audit.exe`. El programa comienza con un proyecto vacío. En **Archivo** puedes abrir y guardar proyectos JSON.
+Extrae todo el ZIP a una carpeta y ejecuta `Modbus-Audit.exe`. El programa comienza con un proyecto vacío. En **Archivo** puedes abrir y guardar proyectos JSON.
 
 El explorador contiene **Modbus Client** y **Modbus Server**. En cada rol agrega el dispositivo, configura y guarda su conexión y después crea sus bloques. Seleccionar un dispositivo o un mapa solo cambia la vista; no inicia ni detiene la comunicación.
 
@@ -82,3 +82,9 @@ Client muestra **TX REQUEST LOCAL / RX RESPUESTA REMOTA**. Server muestra **RX R
 Clic derecho en **Mapa Modbus → Exportar mapa** genera un CSV del bloque Client o Server, incluso detenido. Incluye direcciones, función, tipo, orden, palabra cruda, interpretación y estado. Client exporta sus últimos valores; sin lecturas deja los valores vacíos. Server exporta una instantánea de su memoria.
 
 Archivo y la barra ofrecen también exportación de tags y tráfico CSV.
+
+## Analizador de tráfico y presentación
+
+Buscar filtra por texto de hora, nivel, origen, evento y bytes. Quitar filtro restaura las líneas disponibles. Pausar visor congela la vista; Client y Server continúan operando y el historial sigue rotando hasta 5000 registros. Pantalla completa conserva los mismos datos y filtros; Volver o Esc cierra esa vista sin detener la adquisición. Seleccionar una línea la copia; también puedes usar Copiar línea, Ctrl+C o el menú contextual.
+
+El splash de inicio muestra la identidad del producto y se cierra al terminar la preparación. Ayuda → Acerca de reutiliza esa presentación con Cerrar y Ver licencia MIT. Las conexiones y bloques de ambos roles usan recuadros titulados y acciones arriba a la derecha.

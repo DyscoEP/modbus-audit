@@ -1,18 +1,19 @@
 # Historial de versiones
 
-## Sin publicación pública
+## V1.0.7 · compilación 3.16 — 2026-10-13
 
-La documentación inicial describe Modbus Audit 3.8. No se ha publicado un instalador, ejecutable ni paquete descargable en este repositorio.
+Primera publicación oficial en GitHub de Modbus Audit, parte de Field Tools de cloudLOGGER SCADA. La versión pública V1.0.7 y la compilación interna 3.16 identifican el mismo paquete.
 
-### Características documentadas de 3.8
+- Cliente y servidor Modbus TCP/RTU, lecturas FC01/02/03/04 y escrituras FC05/06/15/16.
+- Mapas, direcciones base 0/1, interpretación tipada y escritura con comprobación.
+- Analizador de tráfico con búsqueda, pausa visual, copia y pantalla completa.
+- Exportación CSV de tags, mapas y tráfico; proyectos JSON.
+- Controles generales/locales y bandeja de Windows.
+- Identidad visual integrada; splash y Acerca de simplificados.
+- Paquete portable con cuatro archivos: EXE, LEEME, licencia MIT y avisos completos de terceros.
 
-- Cliente y servidor Modbus TCP/RTU.
-- Lecturas FC01/02/03/04 y escrituras FC05/06/15/16.
-- Formato, orden de bytes/palabras y notación de mapa por bloque.
-- Escritura tipada con comprobación posterior.
-- Controles generales y locales de comunicación; navegación independiente de la ejecución.
-- Exportación del mapa por bloque mediante menú contextual, tanto Client como Server.
-- Proyectos JSON, exportaciones CSV y visor de tramas.
-- Consulta de interfaces locales y controles desde la bandeja de Windows.
+El LEEME documenta 37 pruebas de desarrollo en Windows 11 y una comprobación TCP local de escritura Float32. Windows 10 y RTU físico siguen pendientes de validar.
 
-Las futuras entradas corresponderán a versiones realmente publicadas y describirán sus cambios y validaciones.
+## Desarrollo previo
+
+Las versiones 3.x y las compilaciones anteriores fueron iteraciones internas. No son Releases anteriores de este repositorio.

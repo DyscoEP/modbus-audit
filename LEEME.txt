@@ -1,0 +1,206 @@
+MODBUS AUDIT V1.0.7 — Compilación 3.16 — Windows x64 — Portable
+
+INICIO
+Extrae el ZIP y ejecuta Modbus-Audit.exe. No requiere instalar Python,
+servicios ni componentes. El adaptador serial debe tener su COM instalado.
+Se inicia con un proyecto vacío; Archivo permite abrir y guardar proyectos JSON.
+
+EXPLORADOR
+Modbus Client y Modbus Server tienen + Agregar dispositivo.
+Configura la conexión en el panel derecho y guárdala. Su nombre abre sus
+propiedades. + Agregar bloque configura memoria/tags; el bloque guardado
+abre sus propiedades y debajo tiene Mapa Modbus para mostrar sus valores.
+La navegación nunca inicia ni detiene comunicación.
+Los iconos del mapa son indicadores: triángulo verde = activo;
+cuadrado rojo = detenido. No son controles.
+Clic derecho en un dispositivo permite Iniciar / Detener Poleo (Client),
+Iniciar / Detener Broadcast (Server) y eliminarlo.
+Clic derecho en un bloque permite eliminarlo. El borrado detiene primero
+la comunicación correspondiente y conserva la memoria de los demás bloques.
+
+EJECUCIÓN GENERAL Y LOCAL
+Iniciar Comunicaciones de la barra superior inicia el Server configurado y el sondeo de todos
+los bloques Client. Detener Comunicaciones de la barra detiene ambos, independientemente de
+la página seleccionada. Estos mismos controles existen en la bandeja.
+El botón junto a Tipo / Orden / Mapa es local: en un mapa Client de bloque
+inicia o pausa solo ese bloque, sin parar otros bloques activos ni el Server.
+En Server controla la escucha del dispositivo y su mapa de memoria completo.
+Un Server responde a solicitudes; no sondea periódicamente.
+
+CLIENT
+Modbus TCP: IP/host remoto, puerto TCP, ID y timeout.
+Modbus RTU: COM instalado, baudios, paridad, bits de datos/parada, ID y timeout.
+Funciones de lectura 01, 02, 03, 04. Cada bloque permite dirección inicial,
+cantidad, prefijo de tags e intervalo desde 50 ms. Los barridos grandes se
+segmentan según los límites del protocolo. Los bloques comparten el canal
+y se atienden en secuencia. Un equipo lento puede ampliar el intervalo real.
+
+LECTURA E INTERPRETACIÓN
+Cada bloque guarda su tipo, orden y notación de mapa. Seleccionar un tag
+carga los parámetros de su bloque. Decimal crudo siempre permanece visible.
+UInt16/Int16 usan 1 registro; UInt32/Int32/Float32 usan 2;
+UInt64/Int64/Float64 usan 4. Los registros siguientes se indican como
+continuaciones. Una configuración de formato reinterpreta los bytes;
+no modifica automáticamente su contenido. Faltan registros avisa si el
+bloque no tiene suficiente espacio para interpretar el dato completo.
+Los coils/discrete inputs usan bits 0/1.
+
+ESCRITURA CLIENT INTEGRADA
+Selecciona un tag en la tabla y escribe arriba su valor decimal usando
+el tipo y orden de su bloque. Usa punto para la parte decimal de un float.
+Las listas separadas por coma escriben varios valores consecutivos del
+mismo tipo. Deben caber íntegramente dentro del bloque.
+Selecciona el primer registro de un valor; sus continuaciones no permiten
+comenzar una escritura. FC02/04 no admiten escrituras Modbus.
+La función se elige automáticamente: 05/15 para coils; 06/16 para holding
+registers. Float32/Float64 se codifican en 2/4 palabras UInt16 reales.
+El panel muestra tag, mapa, base, dirección en trama, función, cantidad,
+palabras crudas, bytes y petición TCP/RTU. Puedes desplazar su desglose.
+Al escribir se hace una lectura de comprobación. Con sondeo activo,
+la escritura se atiende entre lecturas. Un fallo de comprobación no
+significa que la escritura no haya llegado: revisa el equipo antes de repetirla.
+Doble clic en la columna Tag permite renombrar un tag Client.
+
+SERVER
+Emula memoria Modbus TCP o RTU para clientes externos.
+TCP: IP local de escucha y puerto. 0.0.0.0 escucha en todas las interfaces;
+127.0.0.1 permite pruebas en esta PC. El destino del Client debe coincidir.
+RTU: COM instalado con parámetros iguales a los del cliente remoto.
+Client y Server RTU en esta PC deben usar COM distintos conectados entre sí.
+Agrega bloques FC01 coils, FC02 discrete inputs, FC03 holding registers,
+FC04 input registers. Los valores iniciales son palabras crudas decimales,
+una para repetir o una lista de la cantidad configurada.
+No se permiten rangos superpuestos en la misma familia de memoria.
+Selecciona un tag para editar su valor local con el formato del bloque.
+La edición local modifica las palabras que recibe el cliente remoto.
+Las escrituras remotas FC05/06/15/16 actualizan la memoria y la tabla local.
+FC02/04 se pueden editar localmente pero son de solo lectura en Modbus.
+
+DIRECCIONES
+Todo se introduce en decimal. Base 0 acepta 0–65535; base 1, 1–65536.
+La dirección en trama siempre es base 0: dirección del usuario menos base.
+Con base 1, introducir 0 es inválido y se indica expresamente.
+Mapa clásico: primer holding register = 40001 (400001 en 6 dígitos),
+primer input register = 30001 (300001), primer coil = 00001,
+primer discrete input = 10001. El mapa clásico es una referencia visual:
+el prefijo no se transmite. Base 0 dirección 0 y base 1 dirección 1
+representan el mismo primer registro, dirección en trama 0.
+Cuando el índice supera el espacio de 5 dígitos se usan 6 automáticamente.
+
+TRÁFICO
+El visor inferior se actualiza con las comunicaciones reales.
+CLIENT: TX REQUEST LOCAL / RX RESPUESTA REMOTA.
+SERVER: RX REQUEST REMOTA / TX RESPUESTA LOCAL.
+Incluye hora, rol, protocolo, ID, FC, destino/remoto y bytes.
+Selecciona hexadecimal o decimal para representar cada byte de la trama.
+Las vistas previas no transmiten solicitudes; el Transaction ID TCP real
+se muestra en el tráfico. El historial conserva hasta 5000 entradas.
+Puedes exportar tráfico, limpiar el visor y activar Seguir tráfico.
+Archivo / barra también permiten exportar los tags Client a CSV.
+
+RED LOCAL
+Consultar mi IP muestra una tabla de interfaz, IPv4 y MAC.
+Cada fila tiene Copiar IP y Copiar MAC cuando existe ese dato.
+Consultar o copiar no cambia automáticamente la conexión.
+Si falla el inicio TCP se informa dirección, puerto y error original;
+para errores 10013/10048 se consulta el puerto reservado y proceso en escucha.
+Una consulta sin resultados no identifica por sí sola la causa del bloqueo.
+Si se prueba otro puerto (por ejemplo 1502), debe cambiarse en ambos extremos.
+
+BANDEJA DE WINDOWS
+Minimizar oculta la ventana y mantiene la ejecución.
+Se solicita una notificación de segundo plano; Windows puede silenciarla
+según su configuración de notificaciones.
+Clic izquierdo en el icono abre la ventana.
+Clic derecho ofrece Abrir / Configurar, Iniciar Comunicaciones, Detener Comunicaciones y Salir.
+Cerrar la ventana o Salir termina el programa. Minimizar no lo termina.
+
+VALIDACIÓN
+37 pruebas de protocolo, memoria, interfaz y controles pasaron en Windows 11.
+Se verificó con el ejecutable portable una escritura Float32 de 5.6 y
+su lectura de comprobación mediante Client y Server TCP locales.
+La integración de bandeja crea y libera su icono e hilo nativos de Windows.
+Esta versión no se ha probado aquí en Windows 10 ni con un adaptador RTU físico.
+
+EXPORTAR MAPA
+Clic derecho en Mapa Modbus > Exportar mapa guarda un CSV del bloque
+correspondiente, tanto Client como Server, aunque no esté activo.
+Incluye rol, bloque, tag, mapa, función de lectura, base, dirección de usuario
+y en trama, tipo, orden, palabra cruda, interpretación y estado.
+Client exporta los últimos valores leídos; sin lecturas deja los valores vacíos.
+Server exporta una instantánea de la memoria local.
+La opción Mapa de tags se retiró del menú Ver.
+Broadcast es el nombre del control de exposición del Server en esta interfaz;
+el servidor Modbus continúa atendiendo las peticiones TCP o RTU del cliente.
+
+IDENTIDAD Y LICENCIA
+Versión pública V1.0.7, compilación interna 3.16. La compilación continúa la
+secuencia de desarrollo 3.8; V1 identifica la primera versión pública.
+El icono oficial se aplica al ejecutable, a la ventana y a la bandeja.
+Los iconos y recursos visuales están integrados en el ejecutable, incluidos
+los tamaños adecuados para las vistas de Windows y la bandeja.
+El ZIP contiene únicamente el EXE, LEEME.txt, LICENSE.txt y los avisos
+completos de terceros en THIRD-PARTY-NOTICES.txt.
+Ayuda > Acerca de muestra el icono, las versiones y la licencia MIT.
+El código propio utiliza licencia MIT: uso personal/comercial, modificación
+y redistribución conservando el aviso de copyright y licencia.
+Consulta LICENSE.txt y THIRD-PARTY-NOTICES.txt para los términos completos
+y los avisos de los componentes incluidos.
+
+EMPRESA Y SUITE
+Dysco Exploration and Production
+Modbus Audit forma parte de Field Tools de cloudLOGGER SCADA.
+Página: https://cloudloggerscada.com
+El enlace en Ayuda > Acerca de abre el navegador predeterminado.
+Icono maestro: ICONOS/mba v1.png. La bandeja usa el tamaño de icono pequeño
+que solicita Windows; el ICO incluye tamaños adicionales para escalado DPI.
+
+SPLASH DE INICIO
+Al abrir el ejecutable aparece una pantalla industrial con el icono MBA,
+los logos originales de Dysco y cloudLOGGER SCADA, tecnologías TCP/RTU,
+roles Client/Server, versión y licencia MIT. El indicador avanza por etapas
+reales de preparación de la interfaz, no mide tiempo ni comunicaciones.
+Se muestra al menos 1.4 segundos y se cierra automáticamente al terminar
+la preparación. El proyecto inicia vacío y detenido. No usa Internet.
+En el ejecutable de un solo archivo, la extracción inicial de PyInstaller
+precede al splash; su duración depende del equipo.
+
+SPLASH 1.0.3
+El isotipo de cloudLOGGER SCADA se integra con transparencia sobre el panel
+oscuro. SCADA y LOGGER se muestran en rojo, cloud en gris y el descriptor
+de Dysco en verde, conforme a la propuesta visual aprobada.
+
+VISOR DE TRÁFICO 1.0.4
+El divisor conserva un mínimo de 470 píxeles para configuración y mapa,
+y 230 para tráfico; la ventana tiene un mínimo de 1000 x 800.
+Pantalla completa abre el mismo tráfico y los mismos filtros. Volver o Esc
+cierra esa vista y conserva la adquisición.
+Buscar filtra por texto de hora, nivel, origen, evento y bytes en el formato
+seleccionado. Quitar filtro restaura las líneas disponibles.
+Pausar visor congela las líneas mostradas; Client y Server siguen operando
+y el historial sigue adquiriendo. Reanudar muestra los registros más recientes
+con el filtro activo. El búfer conserva hasta 5000 registros; mientras se
+pausa, las líneas visibles se mantienen, pero el historial sigue rotando.
+Los niveles INFO, WARNING, ERROR y FAILED tienen iconos informativos, de
+advertencia y de error. Los estados del Server también se registran.
+Clic en una línea la selecciona y la copia completa al portapapeles; Copiar
+línea, Ctrl+C y el menú contextual hacen lo mismo. Al pausar se copia la
+línea previamente seleccionada, si existe.
+Clic derecho en Mapa Modbus incluye Iniciar/Detener Poleo en Client,
+Iniciar/Detener Broadcast en Server y Exportar mapa.
+
+FORMULARIOS 1.0.5
+Client y Server comparten los márgenes, espaciado y etiquetas comunes
+del formulario de bloques. Crear/Guardar y Eliminar se muestran a todo
+el ancho, inmediatamente después de los campos. Server conserva su
+valor inicial de memoria y sus explicaciones de direcciones debajo.
+
+INTERFAZ 1.0.7
+Ayuda > Acerca de utiliza el diseño del splash en una ventana persistente
+con Cerrar y Ver licencia MIT. No inicia ni detiene comunicaciones.
+El Analizador de tráfico reúne sus controles en una zona común que ajusta
+las filas según el ancho disponible. Sus funciones de pausa, búsqueda,
+copia y pantalla completa se conservan.
+Conexiones y bloques Client/Server utilizan el mismo panel: acciones arriba
+a la derecha, fuera del recuadro, y campos/ayudas dentro de un LabelFrame
+con el título de la sección.
