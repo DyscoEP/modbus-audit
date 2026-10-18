@@ -4,7 +4,6 @@
 |---|---|---|
 | Windows x64 con red operativa | Para ejecutar y usar Modbus TCP | Usa los controladores de red de Windows o del fabricante de tu PC/NIC. |
 | Controlador del adaptador USB–serial / USB–RS485 | **Necesario para RTU si tu adaptador requiere un driver y todavía no aparece como COM** | Descarga el controlador del fabricante del adaptador o del chip; enlaces oficiales debajo. |
-| Python, Npcap o Wireshark | **No son prerrequisitos de Modbus Audit** | El portable incluye su runtime; TCP/RTU no utilizan Npcap. |
 
 Para RTU, instala únicamente el driver compatible con tu adaptador y Windows. Si ya aparece un puerto COM operativo, no hace falta instalar otro controlador. Un puerto serial nativo puede usar el controlador que ya proporciona Windows.
 

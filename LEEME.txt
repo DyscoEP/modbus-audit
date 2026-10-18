@@ -1,8 +1,8 @@
 MODBUS AUDIT V1.0.7 — Compilación 3.16 — Windows x64 — Portable
 
 INICIO
-Extrae el ZIP y ejecuta Modbus-Audit.exe. No requiere instalar Python,
-servicios ni componentes. El adaptador serial debe tener su COM instalado.
+Extrae el ZIP y ejecuta Modbus-Audit.exe. El adaptador serial debe tener
+su controlador instalado y un puerto COM disponible para utilizar RTU.
 Se inicia con un proyecto vacío; Archivo permite abrir y guardar proyectos JSON.
 
 EXPLORADOR
@@ -31,9 +31,8 @@ CLIENT
 Modbus TCP: IP/host remoto, puerto TCP, ID y timeout.
 Modbus RTU: COM instalado, baudios, paridad, bits de datos/parada, ID y timeout.
 Funciones de lectura 01, 02, 03, 04. Cada bloque permite dirección inicial,
-cantidad, prefijo de tags e intervalo desde 50 ms. Los barridos grandes se
-segmentan según los límites del protocolo. Los bloques comparten el canal
-y se atienden en secuencia. Un equipo lento puede ampliar el intervalo real.
+cantidad, prefijo de tags e intervalo desde 50 ms. El intervalo efectivo depende del tamaño del mapa
+y del tiempo de respuesta del equipo.
 
 LECTURA E INTERPRETACIÓN
 Cada bloque guarda su tipo, orden y notación de mapa. Seleccionar un tag
@@ -115,13 +114,6 @@ Clic izquierdo en el icono abre la ventana.
 Clic derecho ofrece Abrir / Configurar, Iniciar Comunicaciones, Detener Comunicaciones y Salir.
 Cerrar la ventana o Salir termina el programa. Minimizar no lo termina.
 
-VALIDACIÓN
-37 pruebas de protocolo, memoria, interfaz y controles pasaron en Windows 11.
-Se verificó con el ejecutable portable una escritura Float32 de 5.6 y
-su lectura de comprobación mediante Client y Server TCP locales.
-La integración de bandeja crea y libera su icono e hilo nativos de Windows.
-Esta versión no se ha probado aquí en Windows 10 ni con un adaptador RTU físico.
-
 EXPORTAR MAPA
 Clic derecho en Mapa Modbus > Exportar mapa guarda un CSV del bloque
 correspondiente, tanto Client como Server, aunque no esté activo.
@@ -134,8 +126,7 @@ Broadcast es el nombre del control de exposición del Server en esta interfaz;
 el servidor Modbus continúa atendiendo las peticiones TCP o RTU del cliente.
 
 IDENTIDAD Y LICENCIA
-Versión pública V1.0.7, compilación interna 3.16. La compilación continúa la
-secuencia de desarrollo 3.8; V1 identifica la primera versión pública.
+Modbus Audit V1.0.7 · compilación 3.16 · Windows x64.
 El icono oficial se aplica al ejecutable, a la ventana y a la bandeja.
 Los iconos y recursos visuales están integrados en el ejecutable, incluidos
 los tamaños adecuados para las vistas de Windows y la bandeja.
@@ -152,27 +143,14 @@ Dysco Exploration and Production
 Modbus Audit forma parte de Field Tools de cloudLOGGER SCADA.
 Página: https://cloudloggerscada.com
 El enlace en Ayuda > Acerca de abre el navegador predeterminado.
-Icono maestro: ICONOS/mba v1.png. La bandeja usa el tamaño de icono pequeño
-que solicita Windows; el ICO incluye tamaños adicionales para escalado DPI.
 
-SPLASH DE INICIO
-Al abrir el ejecutable aparece una pantalla industrial con el icono MBA,
-los logos originales de Dysco y cloudLOGGER SCADA, tecnologías TCP/RTU,
-roles Client/Server, versión y licencia MIT. El indicador avanza por etapas
-reales de preparación de la interfaz, no mide tiempo ni comunicaciones.
-Se muestra al menos 1.4 segundos y se cierra automáticamente al terminar
-la preparación. El proyecto inicia vacío y detenido. No usa Internet.
-En el ejecutable de un solo archivo, la extracción inicial de PyInstaller
-precede al splash; su duración depende del equipo.
+PRESENTACIÓN Y ACERCA DE
+La pantalla de inicio identifica el producto, su versión y la suite Field Tools.
+Ayuda > Acerca de permite consultar la información del producto, abrir el
+sitio web y leer la licencia MIT. El proyecto inicia vacío y detenido.
 
-SPLASH 1.0.3
-El isotipo de cloudLOGGER SCADA se integra con transparencia sobre el panel
-oscuro. SCADA y LOGGER se muestran en rojo, cloud en gris y el descriptor
-de Dysco en verde, conforme a la propuesta visual aprobada.
-
-VISOR DE TRÁFICO 1.0.4
-El divisor conserva un mínimo de 470 píxeles para configuración y mapa,
-y 230 para tráfico; la ventana tiene un mínimo de 1000 x 800.
+VISOR DE TRÁFICO
+Ajusta el tamaño de los paneles con el divisor entre el mapa y el visor.
 Pantalla completa abre el mismo tráfico y los mismos filtros. Volver o Esc
 cierra esa vista y conserva la adquisición.
 Buscar filtra por texto de hora, nivel, origen, evento y bytes en el formato
@@ -189,18 +167,9 @@ línea previamente seleccionada, si existe.
 Clic derecho en Mapa Modbus incluye Iniciar/Detener Poleo en Client,
 Iniciar/Detener Broadcast en Server y Exportar mapa.
 
-FORMULARIOS 1.0.5
-Client y Server comparten los márgenes, espaciado y etiquetas comunes
-del formulario de bloques. Crear/Guardar y Eliminar se muestran a todo
-el ancho, inmediatamente después de los campos. Server conserva su
-valor inicial de memoria y sus explicaciones de direcciones debajo.
-
-INTERFAZ 1.0.7
-Ayuda > Acerca de utiliza el diseño del splash en una ventana persistente
-con Cerrar y Ver licencia MIT. No inicia ni detiene comunicaciones.
-El Analizador de tráfico reúne sus controles en una zona común que ajusta
-las filas según el ancho disponible. Sus funciones de pausa, búsqueda,
-copia y pantalla completa se conservan.
-Conexiones y bloques Client/Server utilizan el mismo panel: acciones arriba
-a la derecha, fuera del recuadro, y campos/ayudas dentro de un LabelFrame
-con el título de la sección.
+CONFIGURACIÓN E INTERFAZ
+Las conexiones y los bloques de Client y Server se configuran desde el
+explorador. Las acciones Crear, Guardar y Eliminar se encuentran arriba
+a la derecha; cada sección agrupa sus campos y ayudas en un recuadro.
+El Analizador de tráfico reúne sus controles y adapta sus filas al ancho
+disponible. Pausar el visor no detiene las comunicaciones.

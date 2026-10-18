@@ -12,16 +12,16 @@ Pensada para diagnóstico, pruebas de integración y aprendizaje de Modbus TCP y
 
 [**Descargar Modbus Audit para Windows x64**](https://github.com/DyscoEP/modbus-audit/releases/download/v1.0.7/Modbus-Audit-V1.0.7-build3.16-Windows-x64.zip)
 
-Extrae el ZIP completo y ejecuta `Modbus-Audit.exe`. Los iconos y recursos visuales están integrados en el ejecutable.
+Extrae el ZIP completo y ejecuta `Modbus-Audit.exe`. Incluye la guía de uso y los avisos de licencia.
 
-[Guía de uso](docs/guia-de-uso.md) · [Prueba TCP local](docs/prueba-local.md) · [Solución de problemas](docs/solucion-de-problemas.md) · [Reportar un problema](https://github.com/DyscoEP/modbus-audit/issues/new/choose)
+[Guía de uso](docs/guia-de-uso.md) · [Ejemplo Client/Server](docs/prueba-local.md) · [Solución de problemas](docs/solucion-de-problemas.md) · [Reportar un problema](https://github.com/DyscoEP/modbus-audit/issues/new/choose)
 
 ## Qué puedes hacer
 
 | Función | Características |
 |---|---|
 | Cliente Modbus | TCP y RTU; lectura de coils, discrete inputs, holding registers e input registers. |
-| Bloques de tags | Dirección inicial, cantidad, prefijo e intervalo de sondeo configurable desde 50 ms; segmentación de lecturas grandes. |
+| Bloques de tags | Dirección inicial, cantidad, prefijo e intervalo de sondeo configurable desde 50 ms; lectura de rangos amplios. |
 | Escritura | Coils y holding registers, valores individuales o listas, con lectura posterior de comprobación. |
 | Interpretación | UInt16/Int16, UInt32/Int32, UInt64/Int64, Float32 y Float64; orden de bytes y palabras configurable por bloque. |
 | Direccionamiento | Base 0 o 1; dirección del usuario, dirección en trama y referencia clásica de 5 o 6 dígitos. |
@@ -40,7 +40,7 @@ Extrae el ZIP completo y ejecuta `Modbus-Audit.exe`. Los iconos y recursos visua
 
 El visor muestra el tráfico que Modbus Audit envía o recibe. **No captura de forma pasiva todo el tráfico de la red.**
 
-El cliente y el servidor tienen una conexión configurable cada uno y varios bloques. Los bloques Client comparten el canal y se atienden en secuencia; el intervalo efectivo depende de la respuesta del dispositivo.
+El cliente y el servidor tienen una conexión configurable cada uno y varios bloques. El intervalo efectivo de sondeo depende del tiempo de respuesta del dispositivo.
 
 ## Prerrequisitos y descargas oficiales
 
@@ -48,7 +48,6 @@ El cliente y el servidor tienen una conexión configurable cada uno y varios blo
 |---|---|---|
 | Windows x64 con red operativa | Para ejecutar y usar Modbus TCP | Usa los controladores de red de Windows o del fabricante de tu PC/NIC. |
 | Controlador del adaptador USB–serial / USB–RS485 | **Necesario para RTU si tu adaptador requiere un driver y todavía no aparece como COM** | Descarga el controlador del fabricante del adaptador o del chip; enlaces oficiales debajo. |
-| Python, Npcap o Wireshark | **No son prerrequisitos de Modbus Audit** | El portable incluye su runtime; TCP/RTU no utilizan Npcap. |
 
 Para RTU, instala únicamente el driver compatible con tu adaptador y Windows. Si ya aparece un puerto COM operativo, no hace falta instalar otro controlador. Un puerto serial nativo puede usar el controlador que ya proporciona Windows.
 
@@ -59,14 +58,13 @@ Estas opciones son alternativas según el chip, no instalaciones obligatorias pa
 
 [Guía completa de prerrequisitos](docs/prerrequisitos.md)
 
-## Requisitos y estado de validación
+## Requisitos de uso
 
-- Windows de 64 bits. La validación de desarrollo se realizó en **Windows 11**; Windows 10 está pendiente de validar.
-- La distribución portable no requiere instalar Python ni un servicio.
-- Para RTU: adaptador serial con su controlador y puerto COM disponibles, más cableado y parámetros compatibles con el equipo.
-- Interfaz en español.
-
-Se documentaron 37 pruebas de protocolo, memoria, interfaz y controles en desarrollo, además de una escritura Float32 con comprobación entre Client y Server TCP locales. **La validación con un adaptador RTU físico está pendiente.** Esto no constituye una certificación de compatibilidad con todos los equipos.
+- Windows de 64 bits con interfaz en español.
+- Aplicación portable: extrae el paquete y ejecuta el programa.
+- TCP: acceso de red al dispositivo y puerto configurado disponible.
+- RTU: puerto COM operativo, controlador del adaptador y cableado compatible; velocidad, paridad e ID acordes con el equipo.
+- Las direcciones, funciones y formatos deben corresponder al mapa Modbus del fabricante.
 
 ## Descargas y versiones
 

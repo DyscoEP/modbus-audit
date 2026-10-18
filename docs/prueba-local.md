@@ -1,4 +1,4 @@
-# Primera prueba: Client y Server en la misma PC
+# Ejemplo de uso: Client y Server en la misma PC
 
 Ejemplo para familiarizarte con Modbus Audit V1.0.7 usando memoria emulada.
 

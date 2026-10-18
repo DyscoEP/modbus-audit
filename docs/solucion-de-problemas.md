@@ -24,7 +24,7 @@ Una comprobación fallida no garantiza que la escritura haya fallado. Revisa el 
 
 ## RTU no comunica
 
-Verifica controlador, COM, cableado, ID y parámetros seriales iguales en ambos extremos. El puerto no debe estar ocupado por otra aplicación. Client y Server de la misma PC necesitan COM distintos conectados entre sí. La validación de esta versión con adaptador RTU físico está pendiente.
+Verifica controlador, COM, cableado, ID y parámetros seriales iguales en ambos extremos. El puerto no debe estar ocupado por otra aplicación. Client y Server de la misma PC necesitan COM distintos conectados entre sí.
 
 ## La ventana desapareció al minimizar
 
